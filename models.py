@@ -1,0 +1,50 @@
+from django.db import models
+from django.utils.text import slugify
+
+class Match(models.Model):
+    enabled = models.IntegerField()
+    simtype = models.IntegerField()
+    actualleg = models.CharField(max_length=3, null=True, blank=True)
+    modelid = models.IntegerField()
+    simid = models.IntegerField()
+    view = models.TextField(null=True, blank=True)
+    maxwordscore = models.IntegerField()
+    fiveplusscore = models.IntegerField()
+    tenplusscore = models.IntegerField()
+    lidscore = models.IntegerField()
+    maxwords = models.IntegerField()
+    fiveplus = models.IntegerField()
+    tenplus = models.IntegerField()
+    fifteenplus = models.IntegerField()
+    exactmatch = models.IntegerField()
+    modelwords = models.CharField(max_length=20, null=True, blank=True)
+    number = models.CharField(max_length=20, null=True, blank=True)
+    modeltext = models.TextField(null=True, blank=True)
+    modelname = models.TextField(null=True, blank=True)
+    modeltype = models.TextField(null=True, blank=True)
+    modelcat = models.TextField(null=True, blank=True)
+    modelsubject = models.TextField(null=True, blank=True)
+    modeldesc = models.TextField(null=True, blank=True)
+    year1 = models.CharField(max_length=4, null=True, blank=True)
+#    year2 = models.CharField(max_length=4, null=True, blank=True)
+    state = models.TextField(null=True, blank=True)
+    billno = models.SlugField(max_length=100, null=True, blank=True)
+    party = models.CharField(max_length=100, null=True, blank=True)
+    statusdate = models.CharField(max_length=75, null=True, blank=True)
+    status = models.CharField(max_length=75, null=True, blank=True)
+#    statusdate2 = models.CharField(max_length=15, null=True, blank=True)
+    noideawhathisis = models.CharField(max_length=100, null=True, blank=True)
+    primarysponsors = models.TextField(null=True, blank=True)
+    cosponsors = models.TextField(null=True, blank=True)
+    othersponsors = models.TextField(null=True, blank=True)
+    billtext = models.TextField(null=True, blank=True)
+    billtitle = models.TextField(null=True, blank=True)
+    billid = models.TextField(null=True, blank=True)
+    textid = models.TextField(null=True, blank=True)
+
+#    def save(self, *args, **kwargs):
+#        self.slug = slugify(self.hospital)
+#        super().save(*args, **kwargs)
+
+#    def get_absolute_url(self):
+#        return "/deadly-deliveries/%s/" % self.slug

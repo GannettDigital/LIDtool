@@ -1,0 +1,36 @@
+{% extends "lid/base.html" %}
+{% load switch_env %}
+{% load lengthen_state %}
+
+{% block body %}
+
+<div class="container-fluid">
+          <!-- Breadcrumbs-->
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="/lid">Dashboard</a>
+            </li>
+	    <li class="breadcrumb-item">
+              <a href="/lid/{{ match.state }}">{{ match.state|lengthen_state }}</a>
+            </li>
+
+            <li class="breadcrumb-item active">Detail</li>
+          </ol>
+          <div class="card mb-3">
+            <div class="card-header">
+              <i class="fas fa-chart-area"></i>
+              {{ match.state|lengthen_state }} {{ match.billno }} -- {{ match.billtitle }}</div>
+            <div class="card-body">
+		<p><span class="font-weight-bold">Year</span>: {{ match.year1 }}</p>
+		<p><span class="font-weight-bold">Party</span>: {{ match.party }}</p>
+		<p><span class="font-weight-bold">Status</span>: {{ match.status }}</p>
+		<p><span class="font-weight-bold">Primary sponsors</span>: {{ match.primarysponsors }}</p>
+		<p><span class="font-weight-bold">Secondary sponsors</span>: {{ match.cosponsors }}</p>
+		<p>Bills based on similar language have been introduced in {{ other_matches.count }} states: {% for match in other_matches %}<a href="/lid/{{ match.state }}/{{ match.pk }}">{{ match.state|lengthen_state }}</a>{% if not forloop.last %}, {% else %}.{% endif %}{% endfor %}
+		 <iframe height="600px" frameborder="0" width="100%" src="{{ match.view|switch_env }}"></iframe> 
+            </div>
+            <div class="card-footer small text-muted">Updated maybe get timestamp from data file?</div>
+          </div>
+
+        </div>
+{% endblock %}

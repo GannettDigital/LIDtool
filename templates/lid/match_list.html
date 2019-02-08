@@ -1,0 +1,101 @@
+{% extends "lid/base.html" %}
+{% load lengthen_state %}
+{% block body %} 
+ <div class="container-fluid">
+          <!-- Breadcrumbs-->
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="/lid">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">{{ state|lengthen_state }}</li>
+          </ol>
+<!--	  
+	  <div class="row">
+	  The top three stooges were {% for stooge in top_stooges %}{{ stooge.primarysponsors }}, with {{ stooge.scount }} models{% if not forloop.last %}; {% endif %}{% endfor %}
+	  </div>
+-->
+
+
+ <div class="row">
+          <div class="col-lg-8">
+            <div class="card mb-3">
+              <div class="card-header">
+                <i class="fas fa-bullseye"></i>
+                Senators with most legislation based on models</div>
+              <div class="card-body">
+		<ul>
+		  {% for senator in top_stooges %}
+		    <li>{{ senator.primarysponsors }}, connected to {{ senator.scount }} model bills</li>
+		  {% endfor %} 
+		</ul>	
+              </div>
+              <div class="card-footer small text-muted"></div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="card mb-3">
+              <div class="card-header">
+                <i class="fas fa-chart-pie"></i>
+                Top model sources</div>
+              <div class="card-body">
+                 <ul>
+                  {% for source in top_sources %}
+                    <li>{{ source.modeltype }}, {{ source.scount }}</li>
+                  {% endfor %}
+                </ul>  
+              </div>
+              <div class="card-footer small text-muted"></div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         <div class="card mb-3">
+            <div class="card-header">
+              <i class="fas fa-table"></i>
+              LID found {{ match_list.count }} bills in {{ state|lengthen_state }} that are extremely similar to a model bill</div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Bill number</th>
+                      <th>Year introduced</th>
+                      <th>Bill name</th>
+                      <th>Bill subject</th>
+		      <th>Primary sponsors</th>
+                      <th>Comparison</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+		{% for match in match_list %}
+                    <tr>
+                      <td>{{ match.billno }}</td>
+                      <td>{{ match.year1 }}</td>
+                      <td>{{ match.modeldesc }}</td>
+                      <td>{{ match.modelcat }}</td>
+		      <td>{{ match.primarysponsors }}</td>
+                      <td><a href="/lid/{{ state }}/{{ match.pk }}">Details</a></td>
+                    </tr>
+		{% endfor %}		    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card-footer small text-muted">Updated yesterday at (this will be most recent timestamp)</div>
+          </div>
+        </div>
+      </div>
+{% endblock %}
