@@ -74,7 +74,7 @@
             <div class="card-body">		
 		<ul class="list-group">
 		{% for state in state_list %}
-		  <li class="list-group-item">{{ state.statecount }} potential matches in <a href="/lid/{{ state.state }}">{{ state.state|lengthen_state }}<a></li>
+		  <li class="list-group-item">Potential matches in <a href="/lid/{{ state.state }}">{{ state.state|lengthen_state }}<a></li>
 		{% endfor %}
 		</ul>	
             </div>

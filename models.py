@@ -1,6 +1,14 @@
 from django.db import models
 from django.utils.text import slugify
 
+class Reporter(models.Model):
+    name = models.CharField(max_length=100)
+    outlet = models.CharField(max_length=50, null=True, blank=True)
+    statecode = models.CharField(max_length=2)
+    email = models.EmailField(max_length=254, null=True, blank=True)
+    def __str__(self):
+        return self.name
+
 class Match(models.Model):
     enabled = models.IntegerField()
     simtype = models.IntegerField()
@@ -41,6 +49,7 @@ class Match(models.Model):
     billtitle = models.TextField(null=True, blank=True)
     billid = models.TextField(null=True, blank=True)
     textid = models.TextField(null=True, blank=True)
+    timestamp = models.DateTimeField(null=True, blank=True)
 
 #    def save(self, *args, **kwargs):
 #        self.slug = slugify(self.hospital)

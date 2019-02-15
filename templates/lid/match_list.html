@@ -49,19 +49,6 @@
           </div>
         </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
          <div class="card mb-3">
             <div class="card-header">
               <i class="fas fa-table"></i>
@@ -82,12 +69,12 @@
                   <tbody>
 		{% for match in match_list %}
                     <tr>
-                      <td>{{ match.billno }}</td>
+                      <td>{{ match.billno }}{% if match.timestamp %}<br /><i class="fas fa-exclamation" style="color:red"></i> New as of {{ match.timestamp }}{% endif %}</td>
                       <td>{{ match.year1 }}</td>
                       <td>{{ match.modeldesc }}</td>
                       <td>{{ match.modelcat }}</td>
 		      <td>{{ match.primarysponsors }}</td>
-                      <td><a href="/lid/{{ state }}/{{ match.pk }}">Details</a></td>
+                      <td><a href="/lid/{{ state }}/{{ match.billno }}/{{ match.year1 }}/{{ match.modelid }}">Details</a></td>
                     </tr>
 		{% endfor %}		    
                   </tbody>

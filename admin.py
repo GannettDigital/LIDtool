@@ -1,3 +1,8 @@
 from django.contrib import admin
+from lid.models import *
 
-# Register your models here.
+class ReporterAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(Reporter, ReporterAdmin)
+
+

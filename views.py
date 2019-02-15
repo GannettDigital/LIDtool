@@ -5,13 +5,17 @@ from lid.models import Match
 from bakery.views import BuildableDetailView, BuildableListView
 from django.db.models import Count
 
-class MatchDetailView(BuildableDetailView):
-    queryset = Match.objects.all()
+class SimListView(BuildableListView):
+    context_object_name = 'sim_list'
+    template_name = 'lid/match_detail2.html'
+    def get_queryset(self):
+        return Match.objects.filter(state=self.kwargs['statename'], billno=self.kwargs['bill'], year1=self.kwargs['year'], modelid=self.kwargs['modelid'])
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['state'] = self.kwargs['state']
-        context['other_matches'] = Match.objects.filter(lidscore__gte=80).filter(modelid=self.object.modelid).distinct('state')
+        context['state'] = self.kwargs['statename']
+        context['match'] = Match.objects.filter(state=self.kwargs['statename'], billno=self.kwargs['bill'], year1=self.kwargs['year'], modelid=self.kwargs['modelid']).order_by('-id')[0]
+        context['other_matches'] = Match.objects.filter(lidscore__gte=80).filter(modelid=self.kwargs['modelid']).distinct('state')
         return context
 
 class Main(BuildableListView):
@@ -22,7 +26,7 @@ class Main(BuildableListView):
 class MatchList(BuildableListView):
     context_object_name = 'match_list'
     def get_queryset(self):
-        return Match.objects.filter(state=self.kwargs['state']).filter(lidscore__gte=80)
+        return Match.objects.filter(state=self.kwargs['state']).filter(lidscore__gte=80).values("modelid", "billno", "timestamp", "year1", "modeldesc", "modelcat", "primarysponsors").distinct()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

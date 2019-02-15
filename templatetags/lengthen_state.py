@@ -63,7 +63,7 @@ us_state_abbrev = {
 def lengthen_state(value):
     for key, code in us_state_abbrev.items():
         if code == str(value):
-            match = value.replace(code, key)
+            statename = value.replace(code, key)
 #        else:
-#            match = value
-    return match
+#            statename = value
+    return statename
