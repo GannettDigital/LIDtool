@@ -1,0 +1,5 @@
+{{ matches.count }} new bills have been added to LID this year (just testing! will be daily.)
+NOTE: The machine is dumb and makes mistakes. Make sure to chase down each tip before reporting it.
+{% for match in matches %}
+http://172.23.0.168:8000/lid/{{ match.state }}/{{ match.billno }}/{{ match.year1 }}/{{ match.modelid }} {{ match.state }} {{ match.billno }} ({{ match.year1 }})\n
+{% endfor %}

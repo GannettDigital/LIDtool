@@ -9,6 +9,15 @@ class Reporter(models.Model):
     def __str__(self):
         return self.name
 
+class ModelSuggestion(models.Model):
+    model_name = models.CharField(max_length=200)
+    source_link = models.URLField(max_length=200)
+    model_source = models.CharField(max_length=200)
+    model_text = models.TextField()
+    your_name = models.CharField(max_length=200)
+    your_email = models.EmailField(max_length=100)
+
+
 class Match(models.Model):
     enabled = models.IntegerField()
     simtype = models.IntegerField()

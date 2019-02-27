@@ -1,0 +1,29 @@
+{% extends 'lid/base.html' %}
+
+{% block body %}
+
+         <div class="card mb-3">
+            <div class="card-header">
+              <i class="fas fa-plus"></i>
+              Add a model</div>
+            <div class="card-body">
+		<p>If you know of a model that we should compare to new legislation, add it below.
+
+<form action="/lid/add/" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+</form>
+
+ </div>
+            </div>
+            <div class="card-footer small text-muted"></div>
+          </div>
+        </div>
+      </div>
+
+
+
+{% endblock %}
+
+

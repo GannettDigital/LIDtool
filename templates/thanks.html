@@ -1,0 +1,29 @@
+{% extends 'lid/base.html' %}
+
+{% block body %}
+<div class="container-fluid">
+          <!-- Breadcrumbs-->
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="/lid">Dashboard</a>
+            </li>
+	    <li class="breadcrumb-item">
+              <a href="/lid">Add Model</a>
+            </li>
+
+            <li class="breadcrumb-item active">Thanks!</li>
+          </ol>
+<div class="card mb-3">
+            <div class="card-header">
+              <i class="fas fa-exclamation"></i>
+              Model added</div>
+            	<div class="card-body">
+		<h1>Thanks!</h1>
+		<p>Your model has been added and will be proceessed by the LID at the earliest convenience. The process can take up to six weeks, even under the best circumstances.
+		<p>You will be alerted if your model matches to any legislation.
+		  </div>
+              <div class="card-footer small text-muted"></div>
+            </div>
+
+
+{% endblock %}

@@ -9,10 +9,15 @@
             </li>
             <li class="breadcrumb-item active">{{ state|lengthen_state }}</li>
           </ol>
-<!--	  
-	  <div class="row">
-	  The top three stooges were {% for stooge in top_stooges %}{{ stooge.primarysponsors }}, with {{ stooge.scount }} models{% if not forloop.last %}; {% endif %}{% endfor %}
-	  </div>
+<!--
+			<h3><i class="fa fa-folder-open-o"></i> Pick an agency</h3>
+		        <select class="form-control" onchange="if (this.value) window.location.href='/salaries/' + this.value">
+		                <option value='' disabled='disabled' selected='selected'>Select an agency</option>
+		                {% for agency in list_of_govs %}
+		                <option value="{{ agency.maxyear }}/{{ agency.name|slugify }}">{{ agency.name }}</option>
+		                {% endfor %}
+		        </select>
+
 -->
 
 
@@ -20,14 +25,15 @@
           <div class="col-lg-8">
             <div class="card mb-3">
               <div class="card-header">
-                <i class="fas fa-bullseye"></i>
-                Senators with most legislation based on models</div>
+                                <i class="fas fa-search"></i>
+                Advanced Search</div>
               <div class="card-body">
-		<ul>
-		  {% for senator in top_stooges %}
-		    <li>{{ senator.primarysponsors }}, connected to {{ senator.scount }} model bills</li>
-		  {% endfor %} 
-		</ul>	
+			<p>Type a keyword or phrase to find all related model bills in {{ state|lengthen_state }}. 
+                        <form action="/lid/{{ state }}/search" method="GET">
+                        <input type="search" class="form-control" name="q" value="" placeholder="eg; taxes, school choice, etc.">
+                        </form>
+		<p>
+		<p> Want to search for a term nationally? Power search <a href="/lid/search">here</a>.
               </div>
               <div class="card-footer small text-muted"></div>
             </div>
@@ -35,16 +41,17 @@
           <div class="col-lg-4">
             <div class="card mb-3">
               <div class="card-header">
-                <i class="fas fa-chart-pie"></i>
-                Top model sources</div>
+                <i class="fas fa-bullseye"></i>
+                Most common topics across {{ state|lengthen_state }} model bills</div>
               <div class="card-body">
-                 <ul>
-                  {% for source in top_sources %}
-                    <li>{{ source.modeltype }}, {{ source.scount }}</li>
-                  {% endfor %}
-                </ul>  
+		<ul>
+		  {% for topic in top_topics %}
+		    <li>{{ topic.modelsubject }}, {{ topic.scount }} model bills</li>
+		  {% endfor %} 
+		</ul>	
               </div>
               <div class="card-footer small text-muted"></div>
+
             </div>
           </div>
         </div>
@@ -55,13 +62,14 @@
               LID found {{ match_list.count }} bills in {{ state|lengthen_state }} that are extremely similar to a model bill</div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+		<p>Enter a state, sponsor or term from the bill title in the search box below to further filter potential model bills. If you want to do a broader search, use the "Advanced search" above.
+                <p><a href="/lid/{{ state }}/export">Download this table</a>
+		<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
                       <th>Bill number</th>
                       <th>Year introduced</th>
                       <th>Bill name</th>
-                      <th>Bill subject</th>
 		      <th>Primary sponsors</th>
                       <th>Comparison</th>
                     </tr>
@@ -71,8 +79,7 @@
                     <tr>
                       <td>{{ match.billno }}{% if match.timestamp %}<br /><i class="fas fa-exclamation" style="color:red"></i> New as of {{ match.timestamp }}{% endif %}</td>
                       <td>{{ match.year1 }}</td>
-                      <td>{{ match.modeldesc }}</td>
-                      <td>{{ match.modelcat }}</td>
+                      <td>{{ match.billtitle }}</td>
 		      <td>{{ match.primarysponsors }}</td>
                       <td><a href="/lid/{{ state }}/{{ match.billno }}/{{ match.year1 }}/{{ match.modelid }}">Details</a></td>
                     </tr>

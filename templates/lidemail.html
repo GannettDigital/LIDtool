@@ -1,0 +1,7 @@
+The Legislative Influence Detector has identified {{ matches.count }} new bills that appear to be substantially similar to model bills.
+<br>Note: The machine identifies identical strings of text and flags potential copies of model bills. It’s critical to read the model and the bill and thoroughly check out each tip before reporting it.
+<ul>
+{% for match in matches %}
+<li><a href="http://172.23.0.168:8000/lid/{{ match.state }}/{{ match.billno }}/{{ match.year1 }}/{{ match.modelid }}">{{ match.state }} {{ match.billno }} ({{ match.year1 }})</a></li>
+{% endfor %}
+</ul>

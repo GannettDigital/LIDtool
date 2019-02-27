@@ -1,0 +1,59 @@
+{% extends "lid/base.html" %}
+{% load lengthen_state %}
+{% block body %} 
+ <div class="container-fluid">
+          <!-- Breadcrumbs-->
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="/lid">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Power search</li>
+          </ol>
+<!--
+			<h3><i class="fa fa-folder-open-o"></i> Pick an agency</h3>
+		        <select class="form-control" onchange="if (this.value) window.location.href='/salaries/' + this.value">
+		                <option value='' disabled='disabled' selected='selected'>Select an agency</option>
+		                {% for agency in list_of_govs %}
+		                <option value="{{ agency.maxyear }}/{{ agency.name|slugify }}">{{ agency.name }}</option>
+		                {% endfor %}
+		        </select>
+
+-->
+
+         <div class="card mb-3">
+            <div class="card-header">
+              <i class="fas fa-table"></i>
+              LID found {{ results.count }} bills that are extremely similar to a model bill</div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Bill number</th>
+                      <th>Year introduced</th>
+                      <th>Bill name</th>
+                      <th>Bill subject</th>
+		      <th>Primary sponsors</th>
+                      <th>Comparison</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+		{% for match in results %}
+                    <tr>
+                      <td>{{ match.billno }}{% if match.timestamp %}<br /><i class="fas fa-exclamation" style="color:red"></i> New as of {{ match.timestamp }}{% endif %}</td>
+                      <td>{{ match.year1 }}</td>
+                      <td>{{ match.modeldesc }}</td>
+                      <td>{{ match.modelcat }}</td>
+		      <td>{{ match.primarysponsors }}</td>
+                      <td><a href="/lid/{{ match.state }}/{{ match.billno }}/{{ match.year1 }}/{{ match.modelid }}">Details</a></td>
+                    </tr>
+		{% endfor %}		    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card-footer small text-muted">Updated yesterday at (this will be most recent timestamp)</div>
+          </div>
+        </div>
+      </div>
+{% endblock %}
