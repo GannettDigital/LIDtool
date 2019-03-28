@@ -22,13 +22,15 @@
 
 
  <div class="row">
-          <div class="col-lg-8">
+          <div class="col-lg-7">
             <div class="card mb-3">
               <div class="card-header">
                                 <i class="fas fa-search"></i>
                 Advanced Search</div>
               <div class="card-body">
 			<p>Type a keyword or phrase to find all related model bills in {{ state|lengthen_state }}. 
+			<p>NOTE: Treat this as a keyword search. Boolean logic, including quotation marks or words like "AND," will complicate results.
+			<p>
                         <form action="/lid/{{ state }}/search" method="GET">
                         <input type="search" class="form-control" name="q" value="" placeholder="eg; taxes, school choice, etc.">
                         </form>
@@ -38,17 +40,25 @@
               <div class="card-footer small text-muted"></div>
             </div>
           </div>
-          <div class="col-lg-4">
+          <div class="col-lg-5">
             <div class="card mb-3">
               <div class="card-header">
                 <i class="fas fa-bullseye"></i>
-                Most common topics across {{ state|lengthen_state }} model bills</div>
+                The {{ state|lengthen_state }} big picture</div>
               <div class="card-body">
+		TOP TOPICS
 		<ul>
 		  {% for topic in top_topics %}
 		    <li>{{ topic.modelsubject }}, {{ topic.scount }} model bills</li>
 		  {% endfor %} 
 		</ul>	
+		TOP SOURCES
+		<ul>
+		  {% for source in top_sources %}
+		    <li>{{ source.model_source }}, {{ source.ccount }} model bills</li>
+		  {% endfor %} 
+		</ul>
+		
               </div>
               <div class="card-footer small text-muted"></div>
 

@@ -21,6 +21,7 @@
               {{ match.state|lengthen_state }} {{ match.billno }} -- {{ match.billtitle }}</div>
             <div class="card-body">
 		<p><span class="font-weight-bold">Year</span>: {{ match.year1 }}</p>
+		{% if model_deets.model_source %}<p><span class="font-weight-bold">Model Source</span>: {{ model_deets.model_source }}</p>{% endif %}
 		<p><span class="font-weight-bold">Party</span>: {{ match.party }}</p>
 		<p><span class="font-weight-bold">Status</span>: {{ match.status }}</p>
 		<p><span class="font-weight-bold">Primary sponsors</span>: {{ match.primarysponsors }}</p>

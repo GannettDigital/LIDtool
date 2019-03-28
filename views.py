@@ -1,6 +1,6 @@
 from django.utils import timezone
 from django.views.generic.detail import DetailView
-from lid.models import Match
+from lid.models import *
 from bakery.views import BuildableDetailView, BuildableListView
 from django.shortcuts import *
 from django.db.models import *
@@ -41,7 +41,7 @@ def Search(request, statename):
         qset = (
             q_objects
         )
-        results = Match.objects.filter(state=statename).filter(lidscore__gt=80).filter(qset).values("modelid", "billno", "timestamp", "year1", "modeldesc", "modelcat", "primarysponsors").distinct()
+        results = Match.objects.filter(state=statename).filter(lidscore__gt=80).filter(qset).values("state", "modelid", "billno", "timestamp", "year1", "modeldesc", "modelcat", "primarysponsors").distinct()
         
     else:
         results = []
@@ -104,6 +104,10 @@ class SimListView(BuildableListView):
         context['state'] = self.kwargs['statename']
         context['match'] = Match.objects.filter(state=self.kwargs['statename'], billno=self.kwargs['bill'], year1=self.kwargs['year'], modelid=self.kwargs['modelid']).order_by('-id')[0]
         context['other_matches'] = Match.objects.filter(lidscore__gte=80).filter(modelid=self.kwargs['modelid']).distinct('state')
+        try:
+            context['model_deets'] = ModelText.objects.get(model_id=self.kwargs['modelid'])
+        except:
+            context['model_deets'] = []
         return context
 
 class Main(BuildableListView):
@@ -119,6 +123,8 @@ class MatchList(BuildableListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['state'] = self.kwargs['state']
+        modelids = Match.objects.filter(state=self.kwargs['state']).filter(lidscore__gte=80).values('modelid').distinct()
+        context['top_sources'] = ModelText.objects.filter(model_id__in=modelids).values('model_source').annotate(ccount=Count('model_source')).order_by('-ccount') [:3]
         context['top_stooges'] = Match.objects.filter(state=self.kwargs['state']).filter(lidscore__gte=80).exclude(primarysponsors="").values('primarysponsors').annotate(scount=Count('primarysponsors')).order_by('-scount')[:3]
         context['top_topics'] = Match.objects.filter(state=self.kwargs['state']).filter(lidscore__gte=80).values('modelsubject').annotate(scount=Count('modelsubject')).order_by('-scount')[:3]
         return context

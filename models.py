@@ -17,6 +17,15 @@ class ModelSuggestion(models.Model):
     your_name = models.CharField(max_length=200)
     your_email = models.EmailField(max_length=100)
 
+#This is a model containing details on the model, as pulled from
+#https://statehouses-api.gannettdigital.com/api/v1.0/GetTableRecords?output_format=csv&table_name=lid.model_text
+class ModelText(models.Model):
+    keywords = models.CharField(max_length=500, null=True, blank=True)
+    model_source = models.CharField(max_length=500, null=True, blank=True)
+    model_text = models.TextField(null=True, blank=True)
+    model_name = models.CharField(max_length=500, null=True, blank=True)
+    model_id = models.IntegerField()
+    source_link = models.URLField(max_length=500, null=True, blank=True)
 
 class Match(models.Model):
     enabled = models.IntegerField()
